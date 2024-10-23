@@ -1,45 +1,64 @@
 import { ApiProperty } from '@nestjs/swagger';
+import postgres from "postgres";
 
 export class ItemDto {
-  @ApiProperty({ example: 1, description: 'Item ID' })
-  id!: number;
 
-  @ApiProperty({ example: 'AK-47 | Aquamarine Revenge (Factory New)', description: 'Item name' })
-  market_hash_name!: string;
+  @ApiProperty()
+  id: number;
 
-  @ApiProperty({ example: 'EUR', description: 'Currency' })
-  currency!: string;
+  @ApiProperty()
+  market_hash_name: string;
 
-  @ApiProperty({ example: 18.73, description: 'Suggested price' })
-  suggested_price!: number;
+  @ApiProperty()
+  currency: string;
 
-  @ApiProperty({ example: 'https://example.com/item-page', description: 'Item page URL' })
-  item_page!: string;
+  @ApiProperty()
+  suggested_price: number;
 
-  @ApiProperty({ example: 'https://example.com/market-page', description: 'Market page URL' })
-  market_page!: string;
+  @ApiProperty()
+  item_page: string;
 
-  @ApiProperty({ example: 15.0, description: 'Minimum price' })
-  min_price!: number;
+  @ApiProperty()
+  market_page: string;
 
-  @ApiProperty({ example: 25.0, description: 'Maximum price' })
-  max_price!: number;
+  @ApiProperty()
+  min_price: number;
 
-  @ApiProperty({ example: 20.0, description: 'Mean price' })
-  mean_price!: number;
+  @ApiProperty()
+  max_price: number;
 
-  @ApiProperty({ example: 18.0, description: 'Median price' })
-  median_price!: number;
+  @ApiProperty()
+  mean_price: number;
 
-  @ApiProperty({ example: 10, description: 'Quantity available' })
-  quantity!: number;
+  @ApiProperty()
+  median_price: number;
 
-  @ApiProperty({ example: true, description: 'Is the item tradable' })
-  is_tradable!: boolean;
+  @ApiProperty()
+  quantity: number;
 
-  @ApiProperty({ example: '2023-10-10T10:10:10Z', description: 'Created at timestamp' })
-  created_at!: Date;
+  @ApiProperty()
+  is_tradable: boolean;
 
-  @ApiProperty({ example: '2023-10-10T10:10:10Z', description: 'Updated at timestamp' })
-  updated_at!: Date;
+  @ApiProperty()
+  created_at: Date;
+
+  @ApiProperty()
+  updated_at: Date;
+
+  constructor(item: postgres.Row) {
+    this.id = item.id;
+    this.market_hash_name = item.market_hash_name;
+    this.currency = item.currency;
+    this.suggested_price = item.suggested_price;
+    this.item_page = item.item_page;
+    this.market_page = item.market_page;
+    this.min_price = item.min_price;
+    this.max_price = item.max_price;
+    this.mean_price = item.mean_price;
+    this.median_price = item.median_price;
+    this.quantity = item.quantity;
+    this.is_tradable = item.is_tradable;
+    this.created_at = item.created_at;
+    this.updated_at = item.updated_at;
+  }
 }

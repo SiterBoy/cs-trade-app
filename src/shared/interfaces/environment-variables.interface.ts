@@ -1,4 +1,4 @@
-export interface EnvironmentVariables {
+export interface IEnvironmentVariables {
   APP_PORT: string;
   DB_HOST: string;
   DB_PORT: number;
