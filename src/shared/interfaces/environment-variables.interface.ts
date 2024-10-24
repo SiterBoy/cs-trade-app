@@ -7,4 +7,9 @@ export interface IEnvironmentVariables {
   DB_PASSWORD: string;
   JWT_SECRET: string;
   ACCESS_TOKEN_EXPIRES_IN:string;
+  REDIS_URL: string;
+  REDIS_PORT: number;
+  REDIS_DB: number;
+  REDIS_LOGIN: string | undefined;
+  REDIS_PASSWORD:string | undefined
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import postgres from "postgres";
 
-export class ItemDto {
+export class ItemWithMinimalPricesDto {
 
   @ApiProperty()
   id: number;
@@ -20,9 +20,6 @@ export class ItemDto {
 
   @ApiProperty()
   market_page: string;
-
-  @ApiProperty()
-  min_price: number;
 
   @ApiProperty()
   max_price: number;
@@ -45,6 +42,15 @@ export class ItemDto {
   @ApiProperty()
   updated_at: Date;
 
+  @ApiProperty({ nullable: true, type: Number })
+  min_price?: number | null;
+
+  @ApiProperty({ nullable: true, type: Number })
+  min_tradable_price?: number | null;
+
+  @ApiProperty({ nullable: true, type: Number })
+  min_not_tradable_price?: number | null;
+
   constructor(item: postgres.Row) {
     this.id = item.id;
     this.market_hash_name = item.market_hash_name;
@@ -52,7 +58,7 @@ export class ItemDto {
     this.suggested_price = item.suggested_price;
     this.item_page = item.item_page;
     this.market_page = item.market_page;
-    this.min_price = item.min_price;
+    this.min_price = item.min_price ? item.min_price : null;
     this.max_price = item.max_price;
     this.mean_price = item.mean_price;
     this.median_price = item.median_price;
@@ -60,5 +66,7 @@ export class ItemDto {
     this.is_tradable = item.is_tradable;
     this.created_at = item.created_at;
     this.updated_at = item.updated_at;
+    this.min_tradable_price = item.min_tradable_price ? item.min_tradable_price : null;
+    this.min_not_tradable_price = item.min_not_tradable_price ? item.min_not_tradable_price : null;
   }
 }

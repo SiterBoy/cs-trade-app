@@ -13,7 +13,7 @@
 ### 1. Клонируйте репозиторий
 
 
-    git clone https://github.com/ваше_имя_пользователя/ваш_проект.gitcd ваш_проект```  
+    git clone git@github.com:SiterBoy/cs-trade-app.git 
 
 
 ### 2. Настройте переменные окружения

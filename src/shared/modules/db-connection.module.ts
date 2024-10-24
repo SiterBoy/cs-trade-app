@@ -17,8 +17,6 @@ import { IEnvironmentVariables } from "../interfaces/environment-variables.inter
           password: configService.getOrThrow<string>('DB_PASSWORD'),
         });
 
-        await sql`SELECT 1`;
-
         return sql;
       },
       inject: [ConfigService],
