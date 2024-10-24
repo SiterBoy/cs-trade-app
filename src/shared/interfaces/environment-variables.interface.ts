@@ -12,4 +12,5 @@ export interface IEnvironmentVariables {
   REDIS_DB: number;
   REDIS_LOGIN: string | undefined;
   REDIS_PASSWORD:string | undefined
+  PAIRS_WITH_MIN_PRICES_STORAGE_TIME_SECOND: number;
 }

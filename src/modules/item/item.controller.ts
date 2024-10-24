@@ -4,15 +4,20 @@ import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import Redis from "ioredis";
 import { ItemWithMinimalPricesDto } from "./dto/item.dto";
 import { ErrorResponseDto } from "../../shared/dto/error-response.dto";
+import { ConfigService } from "@nestjs/config";
 
 @ApiTags('Item')
 @Controller('item')
 export class ItemController {
   private readonly cacheKey = 'min-price-items';
+  private readonly itemsCachingTimeSecond: number;
   constructor(
     private readonly itemService: ItemService,
+    private readonly configService:ConfigService,
     @Inject('REDIS_CLIENT') private readonly redisClient: Redis
-  ) {}
+  ) {
+    this.itemsCachingTimeSecond = +this.configService.getOrThrow<number>('PAIRS_WITH_MIN_PRICES_STORAGE_TIME_SECOND')
+  }
 
   // @ApiOperation({ summary: 'Get two items with minimum prices: one tradable and one non-tradable' })
   // @ApiResponse({
@@ -43,7 +48,7 @@ export class ItemController {
     }
     const result = await this.itemService.getItemsWithMinimalPrices();
 
-    await this.redisClient.set(this.cacheKey, JSON.stringify(result));
+    await this.redisClient.set(this.cacheKey, JSON.stringify(result), 'EX', this.itemsCachingTimeSecond);
     return result;
   }
 }
